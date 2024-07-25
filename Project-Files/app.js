@@ -11,6 +11,7 @@ const searchBtn = document.querySelector(".search button");
 
 const weatherIcon = document.querySelector(".weather-icon");
 const weatherDiv = document.querySelector(".weather");
+
 const getWeather = async (city) => {
   let dataAJAX = await fetch(APIURL + city);
   if (dataAJAX.status === 404) {
@@ -40,17 +41,17 @@ const getWeather = async (city) => {
   }
 };
 
-searchBtn.addEventListener("click", () => {
-  getWeather(searchBox.value);
-  if (searchBox.value) {
+searchBtn.addEventListener("click", async () => {
+  await getWeather(searchBox.value);
+  if (searchBox.value && dataAJAX.status === 200) {
     weatherDiv.style.display = "block";
   }
 });
 
-searchBox.addEventListener("keydown", (event) => {
+searchBox.addEventListener("keydown", async (event) => {
   if (event.key === "Enter") {
-    getWeather(searchBox.value);
-    if (searchBox.value) {
+    await getWeather(searchBox.value);
+    if (searchBox.value && dataAJAX.status === 200) {
       weatherDiv.style.display = "block";
     }
   }
